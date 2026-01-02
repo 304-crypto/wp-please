@@ -1,8 +1,8 @@
 export interface ThumbnailConfig {
   text: string;
-  bgColor?: string;      // 선택사항으로 변경
-  textColor?: string;    // 선택사항으로 변경
-  borderColor?: string;  // 선택사항으로 변경
+  bgColor?: string;
+  textColor?: string;
+  borderColor?: string;
   fontSize?: number;
   fontWeight?: string;
   lineHeight?: number;
@@ -13,28 +13,13 @@ export interface ThumbnailConfig {
  * 🎨 고대비 컬러 테마 (보색 대비)
  */
 const HIGH_CONTRAST_THEMES = [
-  // 파랑/흰색 (신한은행 스타일)
   { bg: '#FFFFFF', text: '#0066FF', border: '#0066FF' },
-  
-  // 노랑/검정 (강렬함)
   { bg: '#FFD700', text: '#000000', border: '#000000' },
-  
-  // 초록/흰색 (신선함)
   { bg: '#FFFFFF', text: '#00A86B', border: '#00A86B' },
-  
-  // 빨강/흰색 (긴급감)
   { bg: '#FFFFFF', text: '#DC143C', border: '#DC143C' },
-  
-  // 보라/흰색 (고급스러움)
   { bg: '#FFFFFF', text: '#6B3FA0', border: '#6B3FA0' },
-  
-  // 검정/노랑 (경고)
   { bg: '#000000', text: '#FFD700', border: '#FFD700' },
-  
-  // 네이비/흰색 (신뢰감)
   { bg: '#FFFFFF', text: '#003366', border: '#003366' },
-  
-  // 주황/흰색 (활력)
   { bg: '#FFFFFF', text: '#FF6B35', border: '#FF6B35' },
 ];
 
@@ -71,7 +56,6 @@ export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<
   // ═══════════════════════════════════════════════════════════
   const cleanText = config.text.replace(/<[^>]*>/g, '').trim();
   
-  // 컬러가 지정되지 않았으면 랜덤 테마 선택
   const theme = (config.bgColor && config.textColor && config.borderColor) 
     ? { bg: config.bgColor, text: config.textColor, border: config.borderColor }
     : getRandomTheme();
@@ -117,7 +101,7 @@ export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<
   const wrapText = (text: string, maxWidth: number): string[] => {
     const lines: string[] = [];
     
-    // 구두점 기준 분리 (쉼표, 물음표, 느낌표, 마침표)
+    // 구두점 기준 분리
     const segments = text.split(/([,?!.])/);
     let currentLine = '';
 
@@ -128,7 +112,6 @@ export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<
       const testLine = currentLine + segment;
       const metrics = ctx.measureText(testLine);
 
-      // 너비 초과 시 줄바꿈
       if (metrics.width > maxWidth && currentLine !== '') {
         lines.push(currentLine.trim());
         currentLine = segment;
@@ -177,10 +160,9 @@ export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<
     lines = wrapText(cleanText, maxWidth);
   }
 
-  // 강제로 3줄 제한
+  // 강제로 3줄 제한 (... 제거!)
   if (lines.length > 3) {
     lines = lines.slice(0, 3);
-    lines[2] = lines[2].slice(0, -3) + '...';
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -194,7 +176,7 @@ export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<
   // 5. 텍스트 렌더링 (심플하게, 그림자 없음)
   // ═══════════════════════════════════════════════════════════
   ctx.fillStyle = textColor;
-  ctx.textAlign = 'center';          // 수평 중앙
+  ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
   
   ctx.shadowColor = 'transparent';
@@ -203,7 +185,7 @@ export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<
   ctx.shadowOffsetY = 0;
 
   lines.forEach((line) => {
-    ctx.fillText(line, canvas.width / 2, currentY);  // 중앙 정렬
+    ctx.fillText(line, canvas.width / 2, currentY);
     currentY += lineHeight;
   });
 
