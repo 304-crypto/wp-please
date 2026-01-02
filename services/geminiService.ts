@@ -275,37 +275,63 @@ const getSystemInstruction = (customInstruction: string, template: typeof TEMPLA
   ⚠️ 링크 규칙 (매우 중요!):
   
   ✅ 반드시 사용해야 할 링크 (우선순위):
-  1. 정부/공공기관: .go.kr, .gov.kr 도메인
-     예: https://www.moel.go.kr (고용노동부)
-     예: https://www.fss.or.kr (금융감독원)
+  
+  1. 정부/공공기관 공식 사이트 (.go.kr, .gov.kr):
+     - 고용노동부: https://www.moel.go.kr
+     - 금융감독원: https://www.fss.or.kr
+     - 소상공인시장진흥공단: https://www.semas.or.kr
+     - 국세청: https://www.nts.go.kr
+     - 복지로: https://www.bokjiro.go.kr
   
   2. 금융기관/대기업 공식 사이트:
-     예: https://www.shinhan.com
-     예: https://www.kb.co.kr
+     - 신한은행: https://www.shinhan.com
+     - KB국민은행: https://www.kbstar.com
+     - 카카오뱅크: https://www.kakaobank.com
   
   3. 주요 언론사 기사:
-     예: https://news.naver.com/...
-     예: https://www.chosun.com/...
+     - 네이버 뉴스: https://news.naver.com
+     - 조선일보: https://www.chosun.com
+     - 중앙일보: https://www.joongang.co.kr
   
-  4. 위키백과/나무위키:
-     예: https://ko.wikipedia.org/wiki/...
-     예: https://namu.wiki/w/...
+  4. 위키백과만 허용:
+     - https://ko.wikipedia.org/wiki/검색어
   
-  5. 구글 검색 결과 (적절한 링크 없을 때):
-     형식: https://www.google.com/search?q=키워드1+키워드2
-     예: https://www.google.com/search?q=청년도약계좌+가입방법
+  5. 구글 검색 결과 (적절한 링크 없을 때만):
+     - 형식: https://www.google.com/search?q=키워드1+키워드2
+     - 예: https://www.google.com/search?q=소상공인+지원사업
   
   ❌ 절대 사용 금지:
   - "#" (빈 링크)
   - "https://example.com" (예시 링크)
+  - 나무위키 (namu.wiki) - 신뢰도 낮음
   - 개인 블로그 (blog.naver.com, tistory.com, velog.io)
   - 브런치 (brunch.co.kr)
-  - SNS 개인 계정
+  - 존재하지 않는 사이트 (예: "내국위키", "정책위키" 등)
   
-  📌 최소 개수: 전체 글에 5개 이상, H2마다 1개 이상
+  📌 링크 텍스트 작성법 (매우 중요!):
+  
+  ✅ 좋은 예:
+  - "<a href="https://www.semas.or.kr">소상공인시장진흥공단 공식 사이트</a>에서 자세히 확인할 수 있어요"
+  - "<a href="https://www.moel.go.kr">고용노동부</a>에서 안내하는 내용을 보면요"
+  - "<a href="https://www.google.com/search?q=소상공인+지원사업">소상공인 지원사업 검색</a>해보시면 도움될 거예요"
+  - "<a href="https://www.shinhan.com">신한은행 홈페이지</a>를 방문해보세요"
+  
+  ❌ 나쁜 예:
+  - "내국위키에서 확인하기" (존재하지 않는 사이트)
+  - "정책위키 참고" (존재하지 않는 사이트)
+  - "여기를 클릭하세요" (링크가 뭔지 모름)
+  - "자세한 정보 보기" (어디로 가는지 불명확)
+  
+  📌 최소 개수: 전체 글에 5개 이상
   
   📌 스타일 적용:
-  <a href="실제URL" target="_blank" rel="noopener noreferrer" style="color:${template.h3Color} !important; font-weight:700 !important; text-decoration:underline !important; text-underline-offset:4px !important;">링크텍스트</a>
+  <a href="실제URL" target="_blank" rel="noopener noreferrer" style="color:${template.h3Color} !important; font-weight:700 !important; text-decoration:underline !important; text-underline-offset:4px !important;">명확한 링크텍스트</a>
+  
+  ⚠️ 핵심: 
+  - 링크는 반드시 실존하는 공식 사이트만!
+  - 링크 텍스트는 목적지가 명확하게!
+  - 적절한 링크 모르면 구글 검색 페이지!
+  - 존재하지 않는 사이트 이름 절대 금지!
 
   ══════════════════════════════════════════════════════════════════
   🔴 [6. CTA 버튼 - 심리 트리거로 클릭 유도!]
@@ -383,19 +409,19 @@ const getSystemInstruction = (customInstruction: string, template: typeof TEMPLA
   
   ⚠️ 썸네일 텍스트 작성 규칙:
   - 제목을 그대로 쓰지 말고, 더 임팩트 있게 재작성!
-  - 2-3줄로 자연스럽게 끊어지도록 작성 (강제 줄바꿈 없이)
+  - 2-3줄로 자연스럽게 끊어지도록 작성 (공백 기준 줄바꿈)
   - 물음표(?)나 느낌표(!)로 끝내기
   - 사용자가 년도를 명시했으면 그대로 사용, 아니면 시점 표현 빼기
   
   예시:
   - 제목: "2026년 청년도약계좌 가입 방법"
-    썸네일: "2026년 청년도약계좌, 얼마나 받을 수 있을까?"
+    썸네일: "2026년 청년도약계좌 얼마나 받을 수 있을까?"
   
   - 제목: "신한은행 공동인증서 발급"
     썸네일: "신한은행 공동인증서 3분만에 발급하는 법!"
   
-  - 제목: "2026년 교통비 지원 신청"
-    썸네일: "2026년 교통비 지원, 미리 준비하세요!"
+  - 제목: "2026년 소상공인 지원사업 통합 공고"
+    썸네일: "2026년 소상공인 지원사업 통합 공고 정책자금 받으세요!"
   
   [/THUMBNAIL_TEXT]
   [CONTENT]HTML 본문 (본인 소개, 요약 섹션 절대 금지!)[/CONTENT]`;
@@ -499,11 +525,12 @@ export const generateSEOContent = async (
 ⚠️ 중요 지침:
 1. 테마 "${randomTemplate.name}"를 적용해서 사람이 직접 쓴 것처럼 자연스러운 블로그 글 작성
 2. 절대 본인 소개나 요약 섹션을 넣지 마세요!
-3. 하이퍼링크는 반드시 공신력 있는 실제 URL만 사용! (정부기관, 금융기관, 언론사)
-4. 적절한 링크가 없으면 구글 검색 페이지(https://www.google.com/search?q=키워드)를 사용
-5. "#"나 "https://example.com" 같은 가짜 링크는 절대 금지!
-6. CTA 버튼은 심리 트리거 문구 사용! "지금 바로 시작하세요" 같은 평범한 문구 금지!
-7. 사용자가 제목/키워드에 년도(예:2026년)를 명시했으면 그대로 사용, 아니면 시점 표현 빼기!`,
+3. 하이퍼링크는 반드시 실존하는 공식 사이트만! (정부기관, 금융기관, 언론사)
+4. 존재하지 않는 사이트 이름 절대 금지! (예: 내국위키, 정책위키)
+5. 적절한 링크 없으면 구글 검색 페이지 사용
+6. CTA 버튼은 심리 트리거 문구 사용! "지금 바로 시작하세요" 금지!
+7. 사용자가 제목/키워드에 년도 명시했으면 그대로 사용, 아니면 시점 표현 빼기!
+8. 썸네일 텍스트는 공백 기준으로 자연스럽게 줄바꿈되도록 작성!`,
         config: {
           systemInstruction: getSystemInstruction(config.customInstruction || '', randomTemplate),
           maxOutputTokens: 20000,
