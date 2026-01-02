@@ -38,7 +38,7 @@ function getRandomTheme() {
  * ✅ 두꺼운 단일 보더 (심플하고 강렬)
  * ✅ 랜덤 고대비 보색 테마
  * ✅ 중앙 정렬 (수평/수직)
- * ✅ 자연스러운 줄바꿈 (구두점 기준)
+ * ✅ 자연스러운 줄바꿈 (공백 → 구두점 → 글자 순)
  * ✅ HTML 태그 자동 제거
  */
 export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<string> => {
@@ -85,7 +85,7 @@ export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<
   );
 
   // ═══════════════════════════════════════════════════════════
-  // 3. 자연스러운 줄바꿈 (구두점 기준 우선)
+  // 3. 자연스러운 줄바꿈 (공백 → 구두점 → 글자 순)
   // ═══════════════════════════════════════════════════════════
   const padding = 80;
   const maxWidth = canvas.width - (padding * 2);
@@ -94,61 +94,96 @@ export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<
   ctx.font = `${fontWeight} ${fontSize}px 'NanumSquareNeo', 'Pretendard', sans-serif`;
 
   /**
-   * 한글 줄바꿈 로직:
-   * 1. 구두점(,?!.) 기준으로 자연스럽게 분리 시도
-   * 2. 여전히 길면 글자 단위로 강제 분리
+   * 한글 줄바꿈 로직 개선:
+   * 1. 공백 기준 단어 분리 (우선)
+   * 2. 단어가 너무 길면 구두점 기준 분리
+   * 3. 그래도 안 되면 글자 단위 분리
    */
   const wrapText = (text: string, maxWidth: number): string[] => {
     const lines: string[] = [];
     
-    // 구두점 기준 분리
-    const segments = text.split(/([,?!.])/);
+    // 1단계: 공백 기준 단어 분리
+    const words = text.split(' ');
     let currentLine = '';
 
-    for (let i = 0; i < segments.length; i++) {
-      const segment = segments[i];
-      if (!segment) continue;
-      
-      const testLine = currentLine + segment;
+    for (const word of words) {
+      const testLine = currentLine ? currentLine + ' ' + word : word;
       const metrics = ctx.measureText(testLine);
 
       if (metrics.width > maxWidth && currentLine !== '') {
-        lines.push(currentLine.trim());
-        currentLine = segment;
+        lines.push(currentLine);
+        currentLine = word;
       } else {
         currentLine = testLine;
       }
     }
 
-    if (currentLine.trim()) {
-      lines.push(currentLine.trim());
+    if (currentLine) {
+      lines.push(currentLine);
     }
 
-    // 구두점 분리로도 안 되면 글자 단위 강제 분리
-    const needsCharSplit = lines.some(line => ctx.measureText(line).width > maxWidth);
-    
-    if (needsCharSplit || lines.length === 0) {
-      lines.length = 0;
-      currentLine = '';
+    // 2단계: 여전히 너무 긴 줄이 있으면 구두점 기준으로 재분리
+    const finalLines: string[] = [];
+    for (const line of lines) {
+      const metrics = ctx.measureText(line);
       
-      for (const char of text) {
-        const testLine = currentLine + char;
-        const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth) {
+        // 구두점 기준 분리
+        const segments = line.split(/([,?!.])/);
+        let subLine = '';
+        
+        for (const segment of segments) {
+          if (!segment) continue;
+          
+          const testSub = subLine + segment;
+          const subMetrics = ctx.measureText(testSub);
+          
+          if (subMetrics.width > maxWidth && subLine !== '') {
+            finalLines.push(subLine.trim());
+            subLine = segment;
+          } else {
+            subLine = testSub;
+          }
+        }
+        
+        if (subLine.trim()) {
+          finalLines.push(subLine.trim());
+        }
+      } else {
+        finalLines.push(line);
+      }
+    }
 
-        if (metrics.width > maxWidth && currentLine !== '') {
-          lines.push(currentLine);
-          currentLine = char;
+    // 3단계: 그래도 안 되면 글자 단위 분리
+    if (finalLines.some(line => ctx.measureText(line).width > maxWidth)) {
+      const charLines: string[] = [];
+      for (const line of finalLines) {
+        const metrics = ctx.measureText(line);
+        
+        if (metrics.width > maxWidth) {
+          let charLine = '';
+          for (const char of line) {
+            const test = charLine + char;
+            const m = ctx.measureText(test);
+            
+            if (m.width > maxWidth && charLine !== '') {
+              charLines.push(charLine);
+              charLine = char;
+            } else {
+              charLine = test;
+            }
+          }
+          if (charLine) {
+            charLines.push(charLine);
+          }
         } else {
-          currentLine = testLine;
+          charLines.push(line);
         }
       }
-      
-      if (currentLine) {
-        lines.push(currentLine);
-      }
+      return charLines;
     }
 
-    return lines;
+    return finalLines.length > 0 ? finalLines : lines;
   };
 
   // 3줄 이하로 맞추기 위한 폰트 크기 자동 조절
@@ -160,7 +195,7 @@ export const renderThumbnailToBase64 = async (config: ThumbnailConfig): Promise<
     lines = wrapText(cleanText, maxWidth);
   }
 
-  // 강제로 3줄 제한 (... 제거!)
+  // 강제로 3줄 제한 (... 없이)
   if (lines.length > 3) {
     lines = lines.slice(0, 3);
   }
