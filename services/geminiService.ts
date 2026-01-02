@@ -4,7 +4,6 @@ import { renderThumbnailToBase64 } from "./thumbnailRenderer";
 
 /**
  * 10가지 프리미엄 컬러 템플릿
- * - 메타 배경, H2 그라데이션, H3 색상, 버튼 색상, 보색 CTA
  */
 const TEMPLATES = [
   {
@@ -14,7 +13,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #1a73e8, #004d99)',
     h3Color: '#1a73e8',
     buttonColor: '#1565C0',
-    ctaGradient: 'linear-gradient(135deg, #FF6B35, #F7931E, #FFD23F)', // 보색: 오렌지
+    ctaGradient: 'linear-gradient(135deg, #FF6B35, #F7931E, #FFD23F)',
     thumbnailBg: '#1a73e8',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#004d99'
@@ -26,7 +25,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #28a745, #1e7e34)',
     h3Color: '#28a745',
     buttonColor: '#FF5722',
-    ctaGradient: 'linear-gradient(135deg, #FF5722, #FF7043, #FFAB40)', // 보색: 오렌지
+    ctaGradient: 'linear-gradient(135deg, #FF5722, #FF7043, #FFAB40)',
     thumbnailBg: '#28a745',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#1e7e34'
@@ -38,7 +37,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #6a1b9a, #4a148c)',
     h3Color: '#6a1b9a',
     buttonColor: '#FFC107',
-    ctaGradient: 'linear-gradient(135deg, #FFC107, #FFD54F, #FFEB3B)', // 보색: 옐로우
+    ctaGradient: 'linear-gradient(135deg, #FFC107, #FFD54F, #FFEB3B)',
     thumbnailBg: '#6a1b9a',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#4a148c'
@@ -50,7 +49,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #00796b, #004d40)',
     h3Color: '#00796b',
     buttonColor: '#E91E63',
-    ctaGradient: 'linear-gradient(135deg, #E91E63, #F06292, #FF80AB)', // 보색: 핑크
+    ctaGradient: 'linear-gradient(135deg, #E91E63, #F06292, #FF80AB)',
     thumbnailBg: '#00796b',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#004d40'
@@ -62,7 +61,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #a0522d, #8b4513)',
     h3Color: '#8b4513',
     buttonColor: '#BF360C',
-    ctaGradient: 'linear-gradient(135deg, #00BCD4, #26C6DA, #4DD0E1)', // 보색: 시안
+    ctaGradient: 'linear-gradient(135deg, #00BCD4, #26C6DA, #4DD0E1)',
     thumbnailBg: '#a0522d',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#8b4513'
@@ -74,7 +73,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #1a73e8, #004d99)',
     h3Color: '#004d99',
     buttonColor: '#0D47A1',
-    ctaGradient: 'linear-gradient(135deg, #FF9800, #FFB74D, #FFCC80)', // 보색: 오렌지
+    ctaGradient: 'linear-gradient(135deg, #FF9800, #FFB74D, #FFCC80)',
     thumbnailBg: '#0D47A1',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#1A237E'
@@ -86,7 +85,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #28a745, #1e7e34)',
     h3Color: '#1e7e34',
     buttonColor: '#2E7D32',
-    ctaGradient: 'linear-gradient(135deg, #E91E63, #EC407A, #F48FB1)', // 보색: 핑크
+    ctaGradient: 'linear-gradient(135deg, #E91E63, #EC407A, #F48FB1)',
     thumbnailBg: '#2E7D32',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#1B5E20'
@@ -98,7 +97,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #6a1b9a, #4a148c)',
     h3Color: '#4a148c',
     buttonColor: '#6A1B9A',
-    ctaGradient: 'linear-gradient(135deg, #CDDC39, #D4E157, #E6EE9C)', // 보색: 라임
+    ctaGradient: 'linear-gradient(135deg, #CDDC39, #D4E157, #E6EE9C)',
     thumbnailBg: '#6A1B9A',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#38006b'
@@ -110,7 +109,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #00796b, #004d40)',
     h3Color: '#004d40',
     buttonColor: '#00838F',
-    ctaGradient: 'linear-gradient(135deg, #FF5252, #FF8A80, #FFCDD2)', // 보색: 레드
+    ctaGradient: 'linear-gradient(135deg, #FF5252, #FF8A80, #FFCDD2)',
     thumbnailBg: '#00838F',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#006064'
@@ -122,7 +121,7 @@ const TEMPLATES = [
     h2Gradient: 'linear-gradient(to right, #a0522d, #8b4513)',
     h3Color: '#8b4513',
     buttonColor: '#D84315',
-    ctaGradient: 'linear-gradient(135deg, #03A9F4, #29B6F6, #81D4FA)', // 보색: 스카이블루
+    ctaGradient: 'linear-gradient(135deg, #03A9F4, #29B6F6, #81D4FA)',
     thumbnailBg: '#D84315',
     thumbnailText: '#FFFFFF',
     thumbnailBorder: '#BF360C'
@@ -147,6 +146,33 @@ const getSystemInstruction = (customInstruction: string, template: typeof TEMPLA
   
   ✅ 첫 문장부터 바로 본론으로 시작!
   ✅ 예시: "청년도약계좌 특별 금리로 5년 돌리면 얼마나 받을 수 있을까? 직접 계산해봤는데요..."
+
+  ══════════════════════════════════════════════════════════════════
+  🌲 [에버그린 콘텐츠 원칙] - 시간이 지나도 유효한 글
+  ══════════════════════════════════════════════════════════════════
+  
+  📌 시간 표현 규칙:
+  
+  ⚠️ 사용자가 제목이나 키워드에 특정 년도를 명시한 경우:
+  - 예: "2026년 청년도약계좌", "2025년 교통비 지원"
+  - → 해당 년도 기준으로 작성 (년도 표현 허용)
+  - 최신 정보를 반영하되 명시된 년도를 자연스럽게 사용
+  
+  ⚠️ 그 외 일반 키워드인 경우:
+  - 최신 정보로 작성하되, 시간 표현은 빼기 (에버그린)
+  - ❌ "2025년 최신", "올해", "작년", "최근", "요즘"
+  - ❌ "이번 달", "지난주", "다음 주"
+  - ❌ "현재", "지금", "오늘"
+  
+  ✅ 대신 이렇게:
+  - "청년도약계좌 가입하면..." (년도 빼기)
+  - "특별 금리 적용 시..." (시점 빼기)
+  - "신한은행 공동인증서 발급 방법은..." (시기 빼기)
+  
+  📌 예외 (년도 언급 가능한 경우):
+  - 사용자가 제목/키워드에 년도를 명시한 경우
+  - 역사적 사실: "2008년 금융위기 이후..."
+  - 법률 제정 시점: "2015년 제정된 ○○법에 따르면..."
 
   ══════════════════════════════════════════════════════════════════
   ✍️ [글쓰기 스타일 - 사람이 쓴 블로그 글처럼]
@@ -184,7 +210,7 @@ const getSystemInstruction = (customInstruction: string, template: typeof TEMPLA
   - 줄바꿈을 자유롭게 사용한다
   - 형식보다 읽히는 느낌을 우선한다
   - 이모지는 필요할 때만 아주 소량 사용한다
-  
+
   ══════════════════════════════════════════════════════════════════
   🎨 [현재 테마: ${template.name}] - !important로 강제 적용
   ══════════════════════════════════════════════════════════════════
@@ -243,22 +269,97 @@ const getSystemInstruction = (customInstruction: string, template: typeof TEMPLA
   </div>
 
   ══════════════════════════════════════════════════════════════════
-  🔴 [5. 하이퍼링크 - 3개 이상]
+  🔴 [5. 하이퍼링크 - 공신력 있는 외부 링크 필수!]
   ══════════════════════════════════════════════════════════════════
   
-  <a href="https://example.com" target="_blank" style="color:${template.h3Color} !important; font-weight:700 !important; text-decoration:underline !important; text-underline-offset:4px !important;">관련 정보 보기</a>
+  ⚠️ 링크 규칙 (매우 중요!):
+  
+  ✅ 반드시 사용해야 할 링크 (우선순위):
+  1. 정부/공공기관: .go.kr, .gov.kr 도메인
+     예: https://www.moel.go.kr (고용노동부)
+     예: https://www.fss.or.kr (금융감독원)
+  
+  2. 금융기관/대기업 공식 사이트:
+     예: https://www.shinhan.com
+     예: https://www.kb.co.kr
+  
+  3. 주요 언론사 기사:
+     예: https://news.naver.com/...
+     예: https://www.chosun.com/...
+  
+  4. 위키백과/나무위키:
+     예: https://ko.wikipedia.org/wiki/...
+     예: https://namu.wiki/w/...
+  
+  5. 구글 검색 결과 (적절한 링크 없을 때):
+     형식: https://www.google.com/search?q=키워드1+키워드2
+     예: https://www.google.com/search?q=청년도약계좌+가입방법
+  
+  ❌ 절대 사용 금지:
+  - "#" (빈 링크)
+  - "https://example.com" (예시 링크)
+  - 개인 블로그 (blog.naver.com, tistory.com, velog.io)
+  - 브런치 (brunch.co.kr)
+  - SNS 개인 계정
+  
+  📌 최소 개수: 전체 글에 5개 이상, H2마다 1개 이상
+  
+  📌 스타일 적용:
+  <a href="실제URL" target="_blank" rel="noopener noreferrer" style="color:${template.h3Color} !important; font-weight:700 !important; text-decoration:underline !important; text-underline-offset:4px !important;">링크텍스트</a>
 
   ══════════════════════════════════════════════════════════════════
-  🔴 [6. CTA 버튼 - 보색으로 강렬하게!]
+  🔴 [6. CTA 버튼 - 심리 트리거로 클릭 유도!]
   ══════════════════════════════════════════════════════════════════
   
-  ⛔ 절대 금지: "(클릭)" 단어!
+  ⛔ 절대 금지: "(클릭)", "지금 바로 시작하세요" 같은 평범한 문구!
+  
+  ✅ 심리 트리거 문구 (반드시 이 중에서 선택):
+  
+  [손실 회피 트리거]:
+  - "놓치면 후회할 혜택 확인하기"
+  - "이거 모르면 손해봅니다"
+  - "몰랐다간 수백만원 날립니다"
+  - "모르면 손해보는 꿀팁"
+  
+  [긴급성 트리거]:
+  - "마감 전에 꼭 확인하세요"
+  - "서둘러야 받을 수 있어요"
+  - "신청 기간 확인하기"
+  - "지금 안하면 늦어요"
+  
+  [호기심 트리거]:
+  - "내 실수령액 계산해보기"
+  - "얼마나 받을 수 있는지 확인"
+  - "나도 대상자인지 확인하기"
+  - "숨겨진 혜택 찾기"
+  
+  [사회적 증거 트리거]:
+  - "이미 10만명이 받았어요"
+  - "다들 신청했다는 그 혜택"
+  - "모두가 받고 있는 혜택"
+  - "받은 사람들만 아는 비밀"
+  
+  [독점성 트리거]:
+  - "아는 사람만 받는 혜택"
+  - "숨겨진 혜택 확인하기"
+  - "특별 혜택 받는 방법"
+  - "1% 만 아는 정보"
+  
+  [구체적 숫자 트리거]:
+  - "최대 5천만원 받는 방법"
+  - "월 10만원 절약하는 법"
+  - "500만원 더 받기"
+  - "연 120만원 아끼는 법"
+  
+  📌 CTA 버튼 스타일:
   
   [일반 CTA] (첫 번째 H2 후, 두 번째 H2 후):
-  <a href="#" style="display:block !important; text-align:center !important; padding:22px 44px !important; background:${template.ctaGradient} !important; color:#fff !important; text-decoration:none !important; border-radius:18px !important; font-weight:900 !important; font-size:20px !important; box-shadow:0 12px 30px rgba(0,0,0,0.25), inset 0 -3px 0 rgba(0,0,0,0.1) !important; margin:35px auto !important; max-width:480px !important; letter-spacing:-0.3px !important; text-shadow:0 2px 4px rgba(0,0,0,0.2) !important;">🔥 지금 바로 확인하기</a>
+  <a href="#" style="display:block !important; text-align:center !important; padding:22px 44px !important; background:${template.ctaGradient} !important; color:#fff !important; text-decoration:none !important; border-radius:18px !important; font-weight:900 !important; font-size:20px !important; box-shadow:0 12px 30px rgba(0,0,0,0.25), inset 0 -3px 0 rgba(0,0,0,0.1) !important; margin:35px auto !important; max-width:480px !important; letter-spacing:-0.3px !important; text-shadow:0 2px 4px rgba(0,0,0,0.2) !important;">💰 내 실수령액 계산해보기</a>
   
-  [라스트팡 CTA] (마무리 섹션 - 가장 화려하게):
-  <a href="#" style="display:block !important; text-align:center !important; padding:26px 52px !important; background:${template.ctaGradient} !important; color:#fff !important; text-decoration:none !important; border-radius:22px !important; font-weight:900 !important; font-size:24px !important; box-shadow:0 18px 45px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.15), inset 0 -4px 0 rgba(0,0,0,0.12) !important; margin:45px auto 25px !important; max-width:520px !important; letter-spacing:-0.5px !important; text-shadow:0 2px 6px rgba(0,0,0,0.25) !important; border:3px solid rgba(255,255,255,0.3) !important;">🌟 지금 바로 시작하세요!</a>
+  [라스트팡 CTA] (마무리 섹션):
+  <a href="#" style="display:block !important; text-align:center !important; padding:26px 52px !important; background:${template.ctaGradient} !important; color:#fff !important; text-decoration:none !important; border-radius:22px !important; font-weight:900 !important; font-size:24px !important; box-shadow:0 18px 45px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.15), inset 0 -4px 0 rgba(0,0,0,0.12) !important; margin:45px auto 25px !important; max-width:520px !important; letter-spacing:-0.5px !important; text-shadow:0 2px 6px rgba(0,0,0,0.25) !important; border:3px solid rgba(255,255,255,0.3) !important;">🔥 놓치면 후회할 혜택 확인하기</a>
+  
+  ⚠️ 주의: 각 CTA는 다른 문구 사용! 같은 문구 반복 금지!
 
   ══════════════════════════════════════════════════════════════════
   🔴 [7. 자연스러운 마무리]
@@ -278,11 +379,29 @@ const getSystemInstruction = (customInstruction: string, template: typeof TEMPLA
   ══════════════════════════════════════════════════════════════════
   [TITLE]제목[/TITLE]
   [EXCERPT]150자 메타 디스크립션 (HTML 태그 없이 순수 텍스트만!)[/EXCERPT]
-  [THUMBNAIL_TEXT]썸네일 텍스트 (2-3줄, 물음표나 느낌표로 끝내기)[/THUMBNAIL_TEXT]
+  [THUMBNAIL_TEXT]썸네일 텍스트
+  
+  ⚠️ 썸네일 텍스트 작성 규칙:
+  - 제목을 그대로 쓰지 말고, 더 임팩트 있게 재작성!
+  - 2-3줄로 자연스럽게 끊어지도록 작성 (강제 줄바꿈 없이)
+  - 물음표(?)나 느낌표(!)로 끝내기
+  - 사용자가 년도를 명시했으면 그대로 사용, 아니면 시점 표현 빼기
+  
+  예시:
+  - 제목: "2026년 청년도약계좌 가입 방법"
+    썸네일: "2026년 청년도약계좌, 얼마나 받을 수 있을까?"
+  
+  - 제목: "신한은행 공동인증서 발급"
+    썸네일: "신한은행 공동인증서 3분만에 발급하는 법!"
+  
+  - 제목: "2026년 교통비 지원 신청"
+    썸네일: "2026년 교통비 지원, 미리 준비하세요!"
+  
+  [/THUMBNAIL_TEXT]
   [CONTENT]HTML 본문 (본인 소개, 요약 섹션 절대 금지!)[/CONTENT]`;
 
 /**
- * API 키 관리자 - 할당량 소진 시 자동 전환
+ * API 키 관리자
  */
 class ApiKeyManager {
   private static instance: ApiKeyManager;
@@ -315,7 +434,6 @@ class ApiKeyManager {
 
     const nextIndex = (this.currentIndex + 1) % this.keys.length;
     if (nextIndex === 0) {
-      // 모든 키를 순회함
       console.warn('모든 API 키 할당량 소진');
       return false;
     }
@@ -341,9 +459,6 @@ class ApiKeyManager {
 
 const keyManager = ApiKeyManager.getInstance();
 
-/**
- * 할당량 에러 체크
- */
 function isQuotaError(error: any): boolean {
   const msg = (error.message || '').toLowerCase();
   return msg.includes('quota') ||
@@ -353,9 +468,6 @@ function isQuotaError(error: any): boolean {
     msg.includes('limit exceeded');
 }
 
-/**
- * 콘텐츠 생성 (API 키 자동 로테이션)
- */
 export const generateSEOContent = async (
   topicLine: string,
   config: WordPressConfig,
@@ -364,7 +476,6 @@ export const generateSEOContent = async (
   const [displayTitle, mainKeyword = displayTitle] = topicLine.split('///').map(s => s.trim());
   const randomTemplate = TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)];
 
-  // API 키 설정
   const apiKeys = config.apiKeys || [];
   keyManager.setKeys(apiKeys, config.currentKeyIndex || 0, onKeyIndexChange);
 
@@ -382,7 +493,17 @@ export const generateSEOContent = async (
 
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: `주제: ${displayTitle}\n핵심키워드: ${mainKeyword}\n\n테마 "${randomTemplate.name}"를 적용해서 사람이 직접 쓴 것처럼 자연스러운 블로그 글을 작성하세요. 절대 본인 소개나 요약 섹션을 넣지 마세요!`,
+        contents: `주제: ${displayTitle}
+핵심키워드: ${mainKeyword}
+
+⚠️ 중요 지침:
+1. 테마 "${randomTemplate.name}"를 적용해서 사람이 직접 쓴 것처럼 자연스러운 블로그 글 작성
+2. 절대 본인 소개나 요약 섹션을 넣지 마세요!
+3. 하이퍼링크는 반드시 공신력 있는 실제 URL만 사용! (정부기관, 금융기관, 언론사)
+4. 적절한 링크가 없으면 구글 검색 페이지(https://www.google.com/search?q=키워드)를 사용
+5. "#"나 "https://example.com" 같은 가짜 링크는 절대 금지!
+6. CTA 버튼은 심리 트리거 문구 사용! "지금 바로 시작하세요" 같은 평범한 문구 금지!
+7. 사용자가 제목/키워드에 년도(예:2026년)를 명시했으면 그대로 사용, 아니면 시점 표현 빼기!`,
         config: {
           systemInstruction: getSystemInstruction(config.customInstruction || '', randomTemplate),
           maxOutputTokens: 20000,
@@ -404,14 +525,12 @@ export const generateSEOContent = async (
       let content = extract("CONTENT");
       if (!content) throw new Error("본문 생성 실패");
 
-      // 광고 치환
       const ad1Wrapper = config.adCode1 ? `<div style="margin:20px 0 !important; text-align:center !important;">${config.adCode1}</div>` : '';
       const ad2Wrapper = config.adCode2 ? `<div style="margin:20px 0 !important; text-align:center !important;">${config.adCode2}</div>` : '';
 
       content = content.replace(/\[\s*AD1\s*\]/gi, ad1Wrapper);
       content = content.replace(/\[\s*AD2\s*\]/gi, ad2Wrapper);
 
-      // AI 이미지 생성
       let inlineImageHtml = "";
       let base64Img = "";
       if (config.enableAiImage) {
@@ -434,32 +553,20 @@ export const generateSEOContent = async (
         }
       }
 
-      // 썸네일 텍스트 HTML 태그 제거
       const rawThumbnailText = extract("THUMBNAIL_TEXT") || displayTitle;
       const cleanThumbnailText = rawThumbnailText.replace(/<[^>]*>/g, '').trim();
 
-      // 썸네일 생성 (랜덤 컬러 자동 선택)
       const thumbnailData = await renderThumbnailToBase64({
         text: cleanThumbnailText
-        // bgColor, textColor, borderColor 생략 → 자동 랜덤 선택!
       });
 
-      // 메타 디스크립션 HTML 태그 제거
       const rawExcerpt = extract("EXCERPT");
       const cleanExcerpt = rawExcerpt.replace(/<[^>]*>/g, '').trim();
-
-      // 메타 디스크립션 박스
-      const metaDescriptionBox = cleanExcerpt ? `
-        <div style="background:${randomTemplate.metaBg} !important; border-radius:20px !important; padding:28px !important; margin-bottom:40px !important; border:2px solid ${randomTemplate.h3Color}20 !important; box-shadow:0 4px 15px rgba(0,0,0,0.05) !important;">
-          <p style="color:#4a5568 !important; font-size:17px !important; line-height:1.9 !important; margin:0 !important; font-weight:500 !important;">${cleanExcerpt}</p>
-        </div>
-      ` : '';
 
       const finalContent = `
         <div style="margin-bottom:60px !important; text-align:center !important;">
           <img src="data:image/webp;base64,${thumbnailData}" alt="${displayTitle}" style="width:100% !important; max-width:500px !important; border-radius:20px !important; box-shadow:0 15px 40px rgba(0,0,0,0.15) !important;" />
         </div>
-        ${metaDescriptionBox}
         ${content.includes('</h2>') ? content.replace('</h2>', '</h2>' + inlineImageHtml) : content + inlineImageHtml}
       `;
 
@@ -475,21 +582,18 @@ export const generateSEOContent = async (
     } catch (error: any) {
       lastError = error;
 
-      // 할당량 에러인 경우 다음 키로 전환 시도
       if (isQuotaError(error)) {
         console.warn(`API 키 #${keyManager.getCurrentIndex() + 1} 할당량 소진, 다음 키로 전환 시도...`);
         if (!keyManager.rotateToNext()) {
           throw new Error(`모든 API 키(${keyManager.getKeyCount()}개) 할당량이 소진되었습니다. 잠시 후 다시 시도해주세요.`);
         }
-        continue; // 다음 키로 재시도
+        continue;
       }
 
-      // 다른 에러는 바로 throw
       break;
     }
   }
 
-  // 최종 에러 처리
   let errorMsg = lastError.message || "생성 실패";
   if (errorMsg.includes('fetch')) {
     errorMsg = "네트워크 오류: API 서버에 연결할 수 없습니다.";
