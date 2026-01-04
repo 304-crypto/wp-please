@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { AppStatus, WordPressConfig, GeneratedPost, BulkItem, DashboardStats } from './types';
 import { generateSEOContent } from './services/geminiService';
@@ -6,12 +5,26 @@ import { publishToWordPress, fetchPostStats, fetchScheduledPosts } from './servi
 import SettingsModal from './components/SettingsModal';
 import PreviewModal from './components/PreviewModal';
 
+// 기본 설정값
+const DEFAULT_CONFIG: WordPressConfig = {
+  siteUrl: '',
+  username: '',
+  applicationPassword: '',
+  apiKeys: [],
+  currentKeyIndex: 0,
+  customInstruction: '',
+  adCode1: '',
+  adCode2: '',
+  enableAiImage: false
+};
+
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'writer' | 'manager'>('writer');
   const [bulkInput, setBulkInput] = useState('');
   const [status, setStatus] = useState<AppStatus>(AppStatus.IDLE);
   const [queue, setQueue] = useState<BulkItem[]>([]);
-  const [wpConfig, setWpConfig] = useState<WordPressConfig | null>(null);
+  const [wpConfig, setWpConfig] = useState<WordPressConfig>(DEFAULT_CONFIG);
+  const [isConfigLoaded, setIsConfigLoaded] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [previewPost, setPreviewPost] = useState<GeneratedPost | null>(null);
   const [publishedPosts, setPublishedPosts] = useState<GeneratedPost[]>([]);
@@ -33,19 +46,40 @@ const App: React.FC = () => {
     interval: 30
   });
 
-  // 설정 불러오기
+  // ═══════════════════════════════════════════════════════════
+  // 📥 앱 시작 시 localStorage에서 설정 불러오기
+  // ═══════════════════════════════════════════════════════════
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('wp_config');
+      const saved = localStorage.getItem('wp-seo-publisher-config');
       if (saved) {
         const parsed = JSON.parse(saved);
+        console.log('✅ 저장된 설정 불러옴:', parsed);
         setWpConfig(parsed);
         refreshStats(parsed);
+      } else {
+        console.log('ℹ️ 저장된 설정 없음, 기본값 사용');
       }
     } catch (e) {
-      console.error('설정 불러오기 실패:', e);
+      console.error('❌ 설정 불러오기 실패:', e);
+    } finally {
+      setIsConfigLoaded(true);
     }
   }, []);
+
+  // ═══════════════════════════════════════════════════════════
+  // 💾 설정이 변경될 때마다 자동으로 localStorage에 저장
+  // ═══════════════════════════════════════════════════════════
+  useEffect(() => {
+    if (isConfigLoaded) {
+      try {
+        localStorage.setItem('wp-seo-publisher-config', JSON.stringify(wpConfig));
+        console.log('💾 설정 자동 저장됨');
+      } catch (e) {
+        console.error('❌ 설정 저장 실패:', e);
+      }
+    }
+  }, [wpConfig, isConfigLoaded]);
 
   // 통계 새로고침
   const refreshStats = useCallback(async (config: WordPressConfig) => {
@@ -58,29 +92,25 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // 설정 저장
+  // ═══════════════════════════════════════════════════════════
+  // 💾 설정 저장 (SettingsModal에서 호출)
+  // ═══════════════════════════════════════════════════════════
   const saveConfig = useCallback((config: WordPressConfig) => {
+    console.log('✅ 새 설정 저장:', config);
     setWpConfig(config);
-    try {
-      localStorage.setItem('wp_config', JSON.stringify(config));
-    } catch (e) {
-      console.error('설정 저장 실패:', e);
-    }
     refreshStats(config);
   }, [refreshStats]);
 
-  // API 키 인덱스 업데이트 (로테이션 시)
+  // ═══════════════════════════════════════════════════════════
+  // 🔄 API 키 인덱스 업데이트 (로테이션 시)
+  // ═══════════════════════════════════════════════════════════
   const handleKeyIndexChange = useCallback((newIndex: number) => {
-    if (wpConfig) {
-      const updated = { ...wpConfig, currentKeyIndex: newIndex };
-      setWpConfig(updated);
-      try {
-        localStorage.setItem('wp_config', JSON.stringify(updated));
-      } catch (e) {
-        console.error('키 인덱스 저장 실패:', e);
-      }
-    }
-  }, [wpConfig]);
+    console.log(`🔄 API 키 전환: #${newIndex + 1}`);
+    setWpConfig(prev => ({
+      ...prev,
+      currentKeyIndex: newIndex
+    }));
+  }, []);
 
   // 단일 항목 처리
   const processQueueItem = async (index: number, config: WordPressConfig, items: BulkItem[]) => {
@@ -111,7 +141,6 @@ const App: React.FC = () => {
             ...it,
             status: 'failed',
             error: e.message || '알 수 없는 오류가 발생했습니다.',
-            // 이미 생성된 result가 있으면 보존
             result: it.result
           };
         }
@@ -133,7 +162,7 @@ const App: React.FC = () => {
     // API 키 확인
     const hasApiKeys = wpConfig.apiKeys && wpConfig.apiKeys.some(k => k.trim().length > 0);
     if (!hasApiKeys) {
-      setGlobalError('API 키가 설정되지 않았습니다. 설정 → API 키 탭에서 최소 1개 이상의 키를 입력해주세요.');
+      setGlobalError('API 키가 설정되지 않았습니다. 설정에서 최소 1개 이상의 API 키를 입력해주세요.');
       setIsSettingsOpen(true);
       return;
     }
@@ -193,6 +222,18 @@ const App: React.FC = () => {
   };
 
   const inputTopicCount = bulkInput.split('\n').filter(l => l.includes('///')).length;
+
+  // 로딩 중이면 로딩 표시
+  if (!isConfigLoaded) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-600 font-bold">설정 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20 font-['NanumSquareNeo']">
@@ -455,7 +496,7 @@ const App: React.FC = () => {
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         onSave={saveConfig}
-        initialConfig={wpConfig || undefined}
+        initialConfig={wpConfig}
       />
 
       <PreviewModal
